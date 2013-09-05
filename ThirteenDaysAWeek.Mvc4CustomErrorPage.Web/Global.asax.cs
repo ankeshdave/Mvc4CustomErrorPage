@@ -54,6 +54,7 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web
             RequestContext requestContext = new RequestContext(new HttpContextWrapper(Context), routeData);
 
             controller.Execute(requestContext);
+            Response.End();
         }
     }
 }
