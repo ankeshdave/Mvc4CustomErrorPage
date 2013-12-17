@@ -6,9 +6,6 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web.Controllers
 {
     public class ErrorController : Controller
     {
-        //
-        // GET: /Error/
-
         public ActionResult Index(int statusCode, Exception exception, bool isAjaxRequet)
         {
             if (!isAjaxRequet)
