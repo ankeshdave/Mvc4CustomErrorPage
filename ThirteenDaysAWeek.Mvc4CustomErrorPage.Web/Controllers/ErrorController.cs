@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ThirteenDaysAWeek.Mvc4CustomErrorPage.Web.Models;
 
@@ -12,13 +9,22 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web.Controllers
         //
         // GET: /Error/
 
-        public ActionResult Index(int statusCode, Exception exception)
+        public ActionResult Index(int statusCode, Exception exception, bool isAjaxRequet)
         {
-            ErrorModel model = new ErrorModel {HttpStatusCode = statusCode, Exception = exception};
+            if (!isAjaxRequet)
+            {
+                ErrorModel model = new ErrorModel {HttpStatusCode = statusCode, Exception = exception};
 
-            Response.StatusCode = statusCode;
+                Response.StatusCode = statusCode;
 
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                var errorObjet = new {message = exception.Message};
+                Response.StatusCode = 500;
+                return Json(errorObjet, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

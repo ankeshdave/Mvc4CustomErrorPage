@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -43,15 +41,18 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web
                 statusCode = 500;
             }
 
+            HttpContextWrapper contextWrapper = new HttpContextWrapper(this.Context);
+
             RouteData routeData = new RouteData();
             routeData.Values.Add("controller", "Error");
             routeData.Values.Add("action", "Index");
             routeData.Values.Add("statusCode", statusCode);
             routeData.Values.Add("exception", lastError);
-
+            routeData.Values.Add("isAjaxRequet", contextWrapper.Request.IsAjaxRequest());
+           
             IController controller = new ErrorController();
 
-            RequestContext requestContext = new RequestContext(new HttpContextWrapper(Context), routeData);
+            RequestContext requestContext = new RequestContext(contextWrapper, routeData);
 
             controller.Execute(requestContext);
             Response.End();

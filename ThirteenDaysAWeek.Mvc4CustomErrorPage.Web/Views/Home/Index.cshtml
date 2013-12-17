@@ -1,8 +1,24 @@
 ﻿@{
     ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>MVC Custom Error Example</h2>
 <div>
     @Html.ActionLink("Standard Error", "List")
 </div>
+<div>
+    <a href="#" id="ajaxLink">Ajax Error</a>
+</div>
+<div id="errorMessage" style="color: #ff0000;"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#ajaxLink").click(function (event) {
+            event.preventDefault();
+            $.get("/Home/GetData").error(function(jqxhr, message, status) {
+                var errorObject = JSON.parse(jqxhr.responseText);
+                $("#errorMessage").text(errorObject.message);
+            });
+        });
+    });
+</script>
