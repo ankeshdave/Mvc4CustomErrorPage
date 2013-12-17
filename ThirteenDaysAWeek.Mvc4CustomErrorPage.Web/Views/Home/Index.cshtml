@@ -15,7 +15,7 @@
     $(document).ready(function() {
         $("#ajaxLink").click(function (event) {
             event.preventDefault();
-            $.get("/Home/GetData").error(function(jqxhr, message, status) {
+            $.get("/Home/GetData").error(function(jqxhr) {
                 var errorObject = JSON.parse(jqxhr.responseText);
                 $("#errorMessage").text(errorObject.message);
             });
