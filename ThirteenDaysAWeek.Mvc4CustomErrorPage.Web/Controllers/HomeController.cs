@@ -5,13 +5,14 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-
         public ActionResult Index()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
+        public ActionResult List()
+        {
+            throw new InvalidOperationException("Something very bad happened while doing important stuff");
+        }
     }
 }
