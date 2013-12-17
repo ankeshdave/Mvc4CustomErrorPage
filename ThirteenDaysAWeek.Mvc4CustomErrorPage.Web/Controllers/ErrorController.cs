@@ -8,18 +8,19 @@ namespace ThirteenDaysAWeek.Mvc4CustomErrorPage.Web.Controllers
     {
         public ActionResult Index(int statusCode, Exception exception, bool isAjaxRequet)
         {
+            Response.StatusCode = statusCode;
+
+            // If it's not an AJAX request that triggered this action then just retun the view
             if (!isAjaxRequet)
             {
                 ErrorModel model = new ErrorModel {HttpStatusCode = statusCode, Exception = exception};
-
-                Response.StatusCode = statusCode;
 
                 return View(model);
             }
             else
             {
+                // Otherwise, if it was an AJAX request, return an anon type with the message from the exception
                 var errorObjet = new {message = exception.Message};
-                Response.StatusCode = 500;
                 return Json(errorObjet, JsonRequestBehavior.AllowGet);
             }
         }
